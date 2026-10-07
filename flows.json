@@ -1,0 +1,323 @@
+[
+    {
+        "id": "6c61bf74b5b29010",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "340eed4dd3c33cc3",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "24b91c78be4f0d26",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "52fb295bbfbbc731",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#fcfcfd",
+            "primary": "#0d74ce",
+            "bgPage": "#f9f9fb",
+            "groupBg": "#ffffff",
+            "groupOutline": "#d9d9e0"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "0ccad48d8c5bf914",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "24b91c78be4f0d26",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "52fb295bbfbbc731",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "f1adc5b837976eb8",
+        "type": "ui-group",
+        "name": "Group 1",
+        "page": "0ccad48d8c5bf914",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": true,
+        "disabled": false,
+        "groupType": "default"
+    },
+    {
+        "id": "4697101db0af65ca",
+        "type": "mqtt in",
+        "z": "6c61bf74b5b29010",
+        "name": "",
+        "topic": "warehouse/sensors/live",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "340eed4dd3c33cc3",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 240,
+        "wires": [
+            [
+                "eb299fbe7ebab56e",
+                "63481901097da58e"
+            ]
+        ]
+    },
+    {
+        "id": "eb299fbe7ebab56e",
+        "type": "function",
+        "z": "6c61bf74b5b29010",
+        "name": "Exact Tempt",
+        "func": "msg.payload = msg.payload.temp;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 220,
+        "wires": [
+            [
+                "12a3ee818490081c"
+            ]
+        ]
+    },
+    {
+        "id": "63481901097da58e",
+        "type": "function",
+        "z": "6c61bf74b5b29010",
+        "name": "Exact Hum",
+        "func": "msg.payload = msg.payload.hum;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 260,
+        "wires": [
+            [
+                "e119be09d42d54bb"
+            ]
+        ]
+    },
+    {
+        "id": "12a3ee818490081c",
+        "type": "ui-gauge",
+        "z": "6c61bf74b5b29010",
+        "name": "Temperature",
+        "group": "f1adc5b837976eb8",
+        "order": 1,
+        "value": "payload",
+        "valueType": "msg",
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Temperature",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "ºC",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [],
+        "min": 0,
+        "max": "50",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 690,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e119be09d42d54bb",
+        "type": "ui-gauge",
+        "z": "6c61bf74b5b29010",
+        "name": "Humidity",
+        "group": "f1adc5b837976eb8",
+        "order": 0,
+        "value": "payload",
+        "valueType": "msg",
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Humidity",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "%",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [],
+        "min": 0,
+        "max": "100",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 680,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ac5d368a5c69b8f5",
+        "type": "ui-slider",
+        "z": "6c61bf74b5b29010",
+        "group": "",
+        "name": "",
+        "label": "slider",
+        "tooltip": "",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "str",
+        "thumbLabel": "true",
+        "showTicks": "always",
+        "min": 0,
+        "max": "180",
+        "step": "",
+        "className": "",
+        "iconPrepend": "",
+        "iconAppend": "",
+        "color": "",
+        "colorTrack": "",
+        "colorThumb": "",
+        "showTextField": false,
+        "x": 870,
+        "y": 240,
+        "wires": [
+            [
+                "c40c327474f0a920"
+            ]
+        ]
+    },
+    {
+        "id": "c40c327474f0a920",
+        "type": "mqtt out",
+        "z": "6c61bf74b5b29010",
+        "name": "",
+        "topic": "warehouse/servo/secure",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "340eed4dd3c33cc3",
+        "x": 1090,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "20e068d5bbee1fd7",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@flowfuse/node-red-dashboard": "1.32.0"
+        }
+    }
+]
